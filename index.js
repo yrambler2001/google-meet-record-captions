@@ -10,6 +10,7 @@
       const windowMapKey = 'captionsMap';
       const windowParsedDataKey = 'captionsData';
       const windowMeetStartDateKey = 'meetStartDate';
+      const windowCaptionMaxKey = 'captionMaxKey';
 
       const captionDOMElementKey = 'captionKey';
       const captionDOMElementDateKey = 'captionDate';
@@ -37,12 +38,10 @@
 
       if (!captions.length) return;
 
-      const maxKey = Math.max(...captions.map((caption) => caption[captionDOMElementKey] || 0));
-      let currentMaxKey = maxKey;
       captions.forEach((captionElement) => {
         if (!captionElement[captionDOMElementKey]) {
-          currentMaxKey += 1;
-          captionElement[captionDOMElementKey] = currentMaxKey;
+          window[windowCaptionMaxKey] = (window[windowCaptionMaxKey] || 0) + 1;
+          captionElement[captionDOMElementKey] = window[windowCaptionMaxKey];
           captionElement[captionDOMElementDateKey] = +new Date();
         }
       });
